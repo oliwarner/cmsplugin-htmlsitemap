@@ -19,8 +19,8 @@ class HtmlSitemapPlugin(CMSPluginBase):
     def render(self, context, instance, placeholder):
         site = Site.objects.get_current()
         pages = Page.objects.public().published(site=site).order_by('tree_id', 'lft')
-        pages = pages.filter(level__gte=instance.level_min,
-                             level__lte=instance.level_max)
+        pages = pages.filter(depth__gte=instance.level_min,
+                             depth__lte=instance.level_max)
         if not instance.in_navigation is None:
             pages = pages.filter(in_navigation=instance.in_navigation)
         if instance.match_language:
